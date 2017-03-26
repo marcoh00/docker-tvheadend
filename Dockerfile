@@ -4,8 +4,8 @@ MAINTAINER "Marco Huenseler <marco.huenseler+git@gmail.com>"
 
 ENV BUILD_DEPS="build-essential pkg-config libavahi-client-dev libssl-dev zlib1g-dev wget libcurl4-gnutls-dev git-core liburiparser-dev"
 
-# TVHeadend v4.1 tag
-ENV BUILD_COMMIT="52e837590778ff1a0310cfb1240763327b835491"
+# Head of release/4.0 branch as of 2017/03/26
+ENV BUILD_COMMIT="1856b94aa35d547034304fbe7e59afe7870c1b5a"
 
 # Build TVHeadend
 RUN apt-get update && \
