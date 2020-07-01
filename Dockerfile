@@ -1,22 +1,22 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 MAINTAINER "Marco Huenseler <marco.huenseler+git@gmail.com>"
 
 ENV BUILD_DEPS="build-essential cmake pkg-config libavahi-client-dev libssl-dev zlib1g-dev wget libcurl4-gnutls-dev git-core liburiparser-dev libdvbcsa-dev"
 
-# Latest successful CI builded commit of master as of 2019/08/11
-ENV BUILD_COMMIT="ebb0968047b6a3aecd61b48792ab8b48a50ecb0d"
+# Latest commit of master as of 2020/07/01
+ENV BUILD_COMMIT="51a4c5bec7b6fc69dab7b8d559f9b1b881f0eb8e"
 
 # Build TVHeadend
 RUN apt-get update && \
-    apt-get install -y --no-install-suggests --no-install-recommends \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-suggests --no-install-recommends \
         $BUILD_DEPS gettext bzip2 python curl ca-certificates \
-        libssl1.0.0 zlib1g liburiparser1 libavahi-common3 libavahi-client3 libdbus-1-3 libselinux1 liblzma5 libgcrypt20 libpcre3 libgpg-error0 libdvbcsa1 && \
+        libssl1.1 zlib1g liburiparser1 libavahi-common3 libavahi-client3 libdbus-1-3 libselinux1 liblzma5 libgcrypt20 libpcre3 libgpg-error0 libdvbcsa1 && \
     git clone https://github.com/tvheadend/tvheadend /tvh-build && \
     cd /tvh-build && \
     git checkout -b work $BUILD_COMMIT && \
     ./configure --prefix=/usr && \
-    make && \
+    make -j 4 && \
     make install && \
     rm -rf /tvh-build && \
     apt-get purge -y $BUILD_DEPS && \
